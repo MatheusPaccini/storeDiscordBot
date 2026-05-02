@@ -56,4 +56,4 @@ Um bot para Discord focado em automação de vendas de Robux via tickets. O bot 
 ## Licença
 
 Este projeto é de código aberto. Sinta-se livre para modificar, estudar e adaptar para as necessidades do seu servidor.
-Muito obrigado ler até aqui!
+Muito obrigado por ler até aqui!
