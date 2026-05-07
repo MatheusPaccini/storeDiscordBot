@@ -3,7 +3,7 @@ const config = require('../config');
 const { PAGO } = require('../messages');
 const { criarEmbed } = require('../utils/embedBuilder');
 const { isStaffOuDono } = require('../utils/permissoes');
-const tickets = require('../utils/ticketStore');
+const { tickets } = require('../utils/ticketStore');
 
 // ─────────────────────────────────────────────────────
 // Helper: encontra o userId dono do ticket pelo canal
@@ -41,7 +41,7 @@ async function handlePago(interaction) {
 
   // Verifica se é um canal de ticket (pelo nome ou pelo Map)
   const ticket = tickets.get(interaction.channelId);
-  const isTicketChannel = canal.name.startsWith('ticket-') || canal.name.startsWith('✅-') || ticket;
+  const isTicketChannel = canal.name.startsWith('ticket-') || canal.name.startsWith('robux') || canal.name.startsWith('✅-') || ticket;
 
   if (!isTicketChannel) {
     return interaction.reply({ content: PAGO.respostas.naoETicket, flags: 64 });

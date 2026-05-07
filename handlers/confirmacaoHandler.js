@@ -1,7 +1,7 @@
 const { CONFIRMACAO, ARQUIVO } = require('../messages');
 const { criarEmbed } = require('../utils/embedBuilder');
 const { isStaffOuDono } = require('../utils/permissoes');
-const tickets = require('../utils/ticketStore');
+const { tickets } = require('../utils/ticketStore');
 
 // ─────────────────────────────────────────────────────
 // Staff confirma pagamento — edita a mensagem principal

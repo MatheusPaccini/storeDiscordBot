@@ -10,7 +10,7 @@ const config = require('../config');
 const { PEDIDO } = require('../messages');
 const { criarEmbed } = require('../utils/embedBuilder');
 const { calcularPedido } = require('../utils/calculos');
-const tickets = require('../utils/ticketStore');
+const { tickets } = require('../utils/ticketStore');
 
 // ─────────────────────────────────────────────────────
 // Botão "Quero X Robux" → modal só com campo de robux

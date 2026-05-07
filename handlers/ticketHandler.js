@@ -8,7 +8,7 @@ const {
 const config = require('../config');
 const { TICKET, CATALOGO } = require('../messages');
 const { criarEmbed } = require('../utils/embedBuilder');
-const tickets = require('../utils/ticketStore');
+const { tickets, getTicketCount } = require('../utils/ticketStore');
 
 // ─────────────────────────────────────────────────────
 // Modal do nick Roblox → cria o ticket
@@ -23,7 +23,9 @@ async function handleModalRoblox(interaction) {
   await interaction.editReply({ content: TICKET.respostas.criando });
 
   const ticketExistente = guild.channels.cache.find(
-    c => c.name === `ticket-${usuario.username.toLowerCase()}` && c.parentId === config.CATEGORIA_TICKETS_ID
+    c => (c.name.startsWith('ticket-') || c.name.startsWith('robux')) && 
+         c.name.includes(usuario.username.toLowerCase()) && 
+         c.parentId === config.CATEGORIA_TICKETS_ID
   );
 
   if (ticketExistente) {
@@ -31,8 +33,14 @@ async function handleModalRoblox(interaction) {
   }
 
   try {
+    const ticketNumber = getTicketCount();
+    const isRobux = tipo === 'gamepass' || tipo === 'grupo';
+    const channelName = isRobux 
+      ? `robux${ticketNumber}${usuario.username}`
+      : `ticket-${usuario.username}`;
+
     const canal = await guild.channels.create({
-      name: `ticket-${usuario.username}`,
+      name: channelName,
       type: ChannelType.GuildText,
       parent: config.CATEGORIA_TICKETS_ID,
       permissionOverwrites: [

@@ -3,5 +3,12 @@
 // Futuramente pode ser trocado por SQLite/JSON
 // ─────────────────────────────────────────────────────
 const tickets = new Map();
+let ticketCounter = 0;
 
-module.exports = tickets;
+module.exports = {
+  tickets,
+  getTicketCount: () => {
+    ticketCounter++;
+    return ticketCounter;
+  }
+};
