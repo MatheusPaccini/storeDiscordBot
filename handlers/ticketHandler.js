@@ -150,7 +150,19 @@ async function handleAbrirTicketAjuda(interaction) {
     const msgData = TICKET.bemVindoAjuda(usuario.id);
     const embedBemVindo = criarEmbed(msgData);
 
-    const mensagemPrincipal = await canal.send({ content: `<@${usuario.id}>`, embeds: [embedBemVindo] });
+    const rowSuporte = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId('fechar_ticket')
+        .setLabel('Fechar Ticket')
+        .setEmoji('🔒')
+        .setStyle(ButtonStyle.Danger)
+    );
+
+    const mensagemPrincipal = await canal.send({ 
+      content: `<@${usuario.id}>`, 
+      embeds: [embedBemVindo], 
+      components: [rowSuporte] 
+    });
 
     tickets.set(canal.id, {
       canalId: canal.id,
@@ -194,8 +206,37 @@ async function handleCatalogo(interaction) {
   await interaction.update({ embeds: [embed], components: [row] });
 }
 
+// ─────────────────────────────────────────────────────
+// Fechar Ticket (Ajuda ou Vendas)
+// ─────────────────────────────────────────────────────
+async function handleFecharTicket(interaction) {
+  const { isStaffOuDono } = require('../utils/permissoes');
+  
+  if (!isStaffOuDono(interaction)) {
+    return interaction.reply({ content: '❌ Apenas a Staff pode fechar este ticket.', flags: 64 });
+  }
+
+  const canal = interaction.channel;
+  const ticket = tickets.get(interaction.channelId);
+
+  await interaction.reply({ content: '🔒 Este ticket será fechado em 5 segundos...' });
+
+  setTimeout(async () => {
+    try {
+      await canal.delete();
+      if (ticket) {
+        ticket.status = 'encerrado';
+        tickets.delete(canal.id);
+      }
+    } catch (err) {
+      console.error('Erro ao deletar ticket pelo botão fechar:', err);
+    }
+  }, 5000);
+}
+
 module.exports = {
   handleModalRoblox,
   handleCatalogo,
   handleAbrirTicketAjuda,
+  handleFecharTicket,
 };

@@ -1,5 +1,5 @@
 const { handlePainel, handleAbrirTicket } = require('./painelHandler');
-const { handleModalRoblox, handleCatalogo, handleAbrirTicketAjuda } = require('./ticketHandler');
+const { handleModalRoblox, handleCatalogo, handleAbrirTicketAjuda, handleFecharTicket } = require('./ticketHandler');
 const {
   handlePedidoPorRobux,
   handlePedidoPorReais,
@@ -45,6 +45,7 @@ async function handleInteraction(interaction) {
       if (acao === 'calc_tipo') return await handleCalcTipo(interaction, args[0]);
       if (acao === 'calc_robux') return await handleCalcPorRobux(interaction, args[0]);
       if (acao === 'calc_reais') return await handleCalcPorReais(interaction, args[0]);
+      if (acao === 'fechar_ticket') return await handleFecharTicket(interaction);
     }
 
     // ── Modais ──────────────────────────────────────
