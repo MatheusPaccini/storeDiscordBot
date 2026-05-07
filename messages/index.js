@@ -3,7 +3,7 @@
 // Qualquer require('../messages') continua funcionando
 // ══════════════════════════════════════════════════════
 const { CORES } = require('./cores');
-const { PAINEL } = require('./painel');
+const { PAINEL, PAINEL_AJUDA } = require('./painel');
 const { TICKET, CATALOGO, PEDIDO } = require('./ticket');
 const { CONFIRMACAO, PAGO, ARQUIVO } = require('./confirmacao');
 const { CALCULADORA } = require('./calculadora');
@@ -13,6 +13,7 @@ const { ERROS } = require('./erros');
 module.exports = {
   CORES,
   PAINEL,
+  PAINEL_AJUDA,
   TICKET,
   CATALOGO,
   PEDIDO,
