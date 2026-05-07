@@ -5,6 +5,18 @@ const commands = [
   {
     name: 'painel',
     description: 'Envia o painel de abertura de tickets no canal atual',
+    options: [
+      {
+        name: 'tipo',
+        description: 'Tipo de painel a enviar',
+        type: 3, // String
+        choices: [
+          { name: 'Vendas', value: 'vendas' },
+          { name: 'Ajuda', value: 'ajuda' },
+        ],
+        required: false,
+      }
+    ],
   },
   {
     name: 'calcular',

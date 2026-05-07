@@ -23,9 +23,9 @@ async function handleModalRoblox(interaction) {
   await interaction.editReply({ content: TICKET.respostas.criando });
 
   const ticketExistente = guild.channels.cache.find(
-    c => (c.name.startsWith('ticket-') || c.name.startsWith('robux')) && 
-         c.name.includes(usuario.username.toLowerCase()) && 
-         c.parentId === config.CATEGORIA_TICKETS_ID
+    c => (c.name.startsWith('ticket-') || c.name.startsWith('robux-')) &&
+      c.name.includes(usuario.username.toLowerCase()) &&
+      c.parentId === config.CATEGORIA_TICKETS_ID
   );
 
   if (ticketExistente) {
@@ -35,7 +35,7 @@ async function handleModalRoblox(interaction) {
   try {
     const ticketNumber = getTicketCount();
     const isRobux = tipo === 'gamepass' || tipo === 'grupo';
-    const channelName = isRobux 
+    const channelName = isRobux
       ? `robux${ticketNumber}${usuario.username}`
       : `ticket-${usuario.username}`;
 
@@ -102,6 +102,74 @@ async function handleModalRoblox(interaction) {
 }
 
 // ─────────────────────────────────────────────────────
+// Abrir Ticket de Ajuda
+// ─────────────────────────────────────────────────────
+async function handleAbrirTicketAjuda(interaction) {
+  const guild = interaction.guild;
+  const usuario = interaction.user;
+
+  await interaction.deferReply({ flags: 64 });
+  await interaction.editReply({ content: TICKET.respostas.criando });
+
+  const ticketExistente = guild.channels.cache.find(
+    c => c.name.startsWith('ajuda-') &&
+      c.name.includes(usuario.username.toLowerCase()) &&
+      c.parentId === config.CATEGORIA_AJUDA_ID
+  );
+
+  if (ticketExistente) {
+    return interaction.editReply({ content: TICKET.respostas.jaAberto(ticketExistente.id) });
+  }
+
+  try {
+    const canal = await guild.channels.create({
+      name: `ajuda-${usuario.username}`,
+      type: ChannelType.GuildText,
+      parent: config.CATEGORIA_AJUDA_ID,
+      permissionOverwrites: [
+        { id: guild.roles.everyone.id, type: 0, deny: [PermissionFlagsBits.ViewChannel] },
+        {
+          id: interaction.client.user.id, type: 1,
+          allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.ManageChannels],
+        },
+        {
+          id: usuario.id, type: 1,
+          allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory],
+        },
+        {
+          id: config.DONO_ID, type: 1,
+          allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory],
+        },
+        {
+          id: config.SUPORTE_CARGO_ID, type: 0,
+          allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory],
+        },
+      ],
+    });
+
+    const msgData = TICKET.bemVindoAjuda(usuario.id);
+    const embedBemVindo = criarEmbed(msgData);
+
+    const mensagemPrincipal = await canal.send({ content: `<@${usuario.id}>`, embeds: [embedBemVindo] });
+
+    tickets.set(canal.id, {
+      canalId: canal.id,
+      userId: usuario.id,
+      tipo: 'ajuda',
+      status: 'aberto',
+      criadoEm: new Date(),
+      mensagemPrincipalId: mensagemPrincipal.id,
+    });
+
+    await interaction.editReply({ content: TICKET.respostas.criado(canal.id) });
+
+  } catch (err) {
+    console.error('Erro ao criar ticket de ajuda:', err);
+    await interaction.editReply({ content: TICKET.respostas.erroCriar });
+  }
+}
+
+// ─────────────────────────────────────────────────────
 // Catálogo — edita a mensagem principal
 // ─────────────────────────────────────────────────────
 async function handleCatalogo(interaction) {
@@ -129,4 +197,5 @@ async function handleCatalogo(interaction) {
 module.exports = {
   handleModalRoblox,
   handleCatalogo,
+  handleAbrirTicketAjuda,
 };

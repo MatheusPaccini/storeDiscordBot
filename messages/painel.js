@@ -29,4 +29,17 @@ const PAINEL = {
   },
 };
 
-module.exports = { PAINEL };
+const PAINEL_AJUDA = {
+  embed: {
+    title: 'Central de Ajuda',
+    description: 'Precisa de suporte ou tem alguma dúvida? Abra um ticket abaixo para falar com nossa equipe de suporte.',
+    image: 'https://i.imgur.com/MK52Hyb.png',
+    footer: 'Altea Store • Suporte',
+    color: CORES.PRIMARIA,
+  },
+  botoes: {
+    ajuda: { label: 'Abrir Ticket de Ajuda', emoji: '🆘' },
+  }
+};
+
+module.exports = { PAINEL, PAINEL_AJUDA };

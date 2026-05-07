@@ -26,6 +26,7 @@ module.exports = {
   // (clique direito no cargo > copiar ID)
   // ========================================
   STAFF_CARGO_ID: process.env.STAFF_CARGO_ID,
+  SUPORTE_CARGO_ID: process.env.SUPORTE_CARGO_ID,
   DONO_CARGO_ID: process.env.DONO_CARGO_ID,
   CLIENTE_CARGO_ID: process.env.CLIENTE_CARGO_ID,
 
@@ -34,6 +35,7 @@ module.exports = {
   // (clique direito na categoria > copiar ID)
   // ========================================
   CATEGORIA_TICKETS_ID: process.env.CATEGORIA_TICKETS_ID,
+  CATEGORIA_AJUDA_ID: process.env.CATEGORIA_AJUDA_ID,
 
   // ========================================
   // 💰 CHAVE PIX

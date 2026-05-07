@@ -16,6 +16,15 @@ const TICKET = {
     footer: 'Altea Store • Atendimento seguro e rápido',
   }),
 
+  bemVindoAjuda: (userId) => ({
+    title: 'Ticket de Ajuda — Altea Store',
+    description:
+      `Olá, <@${userId}>! Você abriu um ticket de **ajuda**.\n\n` +
+      `Descreva sua dúvida ou problema abaixo e um <@&${config.SUPORTE_CARGO_ID}> irá te atender em breve!`,
+    color: CORES.PRIMARIA,
+    footer: 'Altea Store • Suporte ao Cliente',
+  }),
+
   botaoCatalogo: { label: 'Comprar Robux', emoji: '💸' },
 
   notificacaoDono: (userTag, nickRoblox, canalId) => ({

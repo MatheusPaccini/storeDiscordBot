@@ -41,7 +41,7 @@ async function handlePago(interaction) {
 
   // Verifica se é um canal de ticket (pelo nome ou pelo Map)
   const ticket = tickets.get(interaction.channelId);
-  const isTicketChannel = canal.name.startsWith('ticket-') || canal.name.startsWith('robux') || canal.name.startsWith('✅-') || ticket;
+  const isTicketChannel = canal.name.startsWith('ticket-') || canal.name.startsWith('robux') || canal.name.startsWith('ajuda-') || canal.name.startsWith('✅-') || ticket;
 
   if (!isTicketChannel) {
     return interaction.reply({ content: PAGO.respostas.naoETicket, flags: 64 });

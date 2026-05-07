@@ -1,5 +1,5 @@
 const { handlePainel, handleAbrirTicket } = require('./painelHandler');
-const { handleModalRoblox, handleCatalogo } = require('./ticketHandler');
+const { handleModalRoblox, handleCatalogo, handleAbrirTicketAjuda } = require('./ticketHandler');
 const {
   handlePedidoPorRobux,
   handlePedidoPorReais,
@@ -33,7 +33,10 @@ async function handleInteraction(interaction) {
     if (interaction.isButton()) {
       const [acao, ...args] = interaction.customId.split(':');
 
-      if (acao === 'abrir_ticket') return await handleAbrirTicket(interaction, args[0]);
+      if (acao === 'abrir_ticket') {
+        if (args[0] === 'ajuda') return await handleAbrirTicketAjuda(interaction);
+        return await handleAbrirTicket(interaction, args[0]);
+      }
       if (acao === 'catalogo') return await handleCatalogo(interaction);
       if (acao === 'pedido_por_robux') return await handlePedidoPorRobux(interaction);
       if (acao === 'pedido_por_reais') return await handlePedidoPorReais(interaction);

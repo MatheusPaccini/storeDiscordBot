@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
-const { PAINEL } = require('../messages');
+const { PAINEL, PAINEL_AJUDA } = require('../messages');
 const { isDonoCargo } = require('../utils/permissoes');
 
 async function handlePainel(interaction) {
@@ -7,7 +7,11 @@ async function handlePainel(interaction) {
     return interaction.reply({ content: PAINEL.respostas.semPermissao, flags: 64 });
   }
 
-  const p = PAINEL.embed;
+  // Se o canal for o de suporte ou tiver algum argumento, manda o de ajuda
+  const isAjuda = interaction.options.getString('tipo') === 'ajuda';
+  const data = isAjuda ? PAINEL_AJUDA : PAINEL;
+
+  const p = data.embed;
   const embed = new EmbedBuilder()
     .setColor(p.color)
     .setTitle(p.title)
@@ -15,18 +19,30 @@ async function handlePainel(interaction) {
     .setImage(p.image)
     .setFooter({ text: p.footer });
 
-  const row = new ActionRowBuilder().addComponents(
-    new ButtonBuilder()
-      .setCustomId('abrir_ticket:gamepass')
-      .setLabel(PAINEL.botoes.gamepass.label)
-      .setEmoji(PAINEL.botoes.gamepass.emoji)
-      .setStyle(ButtonStyle.Primary),
-    new ButtonBuilder()
-      .setCustomId('abrir_ticket:grupo')
-      .setLabel(PAINEL.botoes.grupo.label)
-      .setEmoji(PAINEL.botoes.grupo.emoji)
-      .setStyle(ButtonStyle.Success)
-  );
+  const row = new ActionRowBuilder();
+
+  if (isAjuda) {
+    row.addComponents(
+      new ButtonBuilder()
+        .setCustomId('abrir_ticket:ajuda')
+        .setLabel(PAINEL_AJUDA.botoes.ajuda.label)
+        .setEmoji(PAINEL_AJUDA.botoes.ajuda.emoji)
+        .setStyle(ButtonStyle.Danger)
+    );
+  } else {
+    row.addComponents(
+      new ButtonBuilder()
+        .setCustomId('abrir_ticket:gamepass')
+        .setLabel(PAINEL.botoes.gamepass.label)
+        .setEmoji(PAINEL.botoes.gamepass.emoji)
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId('abrir_ticket:grupo')
+        .setLabel(PAINEL.botoes.grupo.label)
+        .setEmoji(PAINEL.botoes.grupo.emoji)
+        .setStyle(ButtonStyle.Success)
+    );
+  }
 
   await interaction.reply({ content: PAINEL.respostas.enviado, flags: 64 });
   await interaction.channel.send({ embeds: [embed], components: [row] });
