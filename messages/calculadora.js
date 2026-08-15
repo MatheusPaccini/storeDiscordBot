@@ -59,7 +59,7 @@ const CALCULADORA = {
   modalReais: {
     titulo: 'Quanto você quer pagar?',
     label: 'Valor em R$',
-    placeholder: 'Ex: 37',
+    placeholder: 'Ex: 40',
   },
 
   resultado: (tipo, robux, reais, gamepass) => {
@@ -97,7 +97,7 @@ const CALCULADORA = {
     enviado: '✅ Painel enviado!',
     semPermissao: '❌ Apenas o Dono pode usar este comando.',
     robuxInvalido: '❌ Quantidade inválida. Ex: 1000',
-    reaisInvalido: '❌ Valor inválido. Ex: 37',
+    reaisInvalido: '❌ Valor inválido. Ex: 40',
   },
 };
 

@@ -48,12 +48,12 @@ module.exports = {
   ROBUX_BASE: 1000, // base de cálculo (1000 robux)
 
   GAMEPASS: {
-    preco: 37,   // R$ por ROBUX_BASE robux (com taxa de 30%)
+    preco: 40,   // R$ por ROBUX_BASE robux (com taxa de 30%)
     taxa: true,  // aplica taxa do Roblox (x / 0.7)
   },
 
   GRUPO: {
-    preco: 35,   // R$ por ROBUX_BASE robux (sem taxa)
+    preco: 37,   // R$ por ROBUX_BASE robux (sem taxa)
     taxa: false, // sem taxa
   },
 };

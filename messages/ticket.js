@@ -66,8 +66,8 @@ const CATALOGO = {
   },
 
   botoes: {
-    porRobux: { label: '💎 Quero X Robux' },
-    porReais: { label: '💰 Quero pagar R$X' },
+    porRobux: { label: '💎 Robux para reais' },
+    porReais: { label: '💰 Reais para robux' },
   },
 };
 
@@ -84,7 +84,7 @@ const PEDIDO = {
   modalReais: {
     titulo: 'Valor em Reais',
     label: 'Quanto você quer pagar? (em R$)',
-    placeholder: 'Ex: 37',
+    placeholder: 'Ex: 40',
   },
 
   resumo: (robux, reais, gamepass, nickRoblox) => {
@@ -130,7 +130,7 @@ const PEDIDO = {
   respostas: {
     registrado: '✅ Pedido registrado! Veja o resumo acima.',
     robuxInvalido: '❌ Quantidade inválida. Digite apenas números. Ex: 1000',
-    reaisInvalido: '❌ Valor inválido. Digite apenas números. Ex: 37',
+    reaisInvalido: '❌ Valor inválido. Digite apenas números. Ex: 40',
   },
 
   contentMencao: (userId) =>
